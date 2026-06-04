@@ -3,66 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Edukasi & Kuis Pengetahuan</title>
+    <title>Ruang Belajar Interaktif</title>
     <style>
-        /* Gaya dasar untuk mereset margin */
+        /* Gaya Dasar */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f2f5;
             color: #333;
         }
 
-        /* Bagian Header Website */
+        /* Header */
         header {
-            background-color: #2c3e50;
+            background-color: #1a252f;
             color: white;
-            text-align: center;
-            padding: 20px 0;
+            padding: 20px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0 0; font-size: 14px; color: #bdc3c7; }
 
-        /* Layout Utama menggunakan Flexbox */
+        /* Layout Utama - Flexbox */
         .container {
             display: flex;
-            flex-wrap: wrap;
             max-width: 1200px;
             margin: 20px auto;
             gap: 20px;
             padding: 0 15px;
+            min-height: 85vh;
         }
 
-        /* Kolom Konten Utama (Lebar 65%) */
-        .main-content {
-            flex: 65%;
-            background-color: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-
-        /* Kolom Sidebar (Lebar 30%) */
+        /* Sidebar Kiri (Lebar 25%) */
         .sidebar {
-            flex: 30%;
+            flex: 25%;
             background-color: white;
-            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Mengatur iframe kuis agar responsif di dalam sidebar */
+        /* Desain Menu di Sidebar */
+        .sidebar h3 {
+            padding: 0 20px;
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
+        .menu-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #34495e;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: #3498db;
+        }
+        /* Penanda menu yang sedang aktif */
+        .menu-item.active {
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            color: #2980b9;
+        }
+
+        /* Area Konten Kanan (Lebar 75%) */
+        .main-content {
+            flex: 75%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+
+        /* Menyembunyikan semua konten secara default */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        /* Menampilkan konten yang aktif */
+        .content-section.active-content {
+            display: block;
+        }
+
+        /* Animasi saat pindah halaman */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pengaturan iframe Kuis */
         .kuis-iframe {
             width: 100%;
-            height: 800px; /* Ditinggikan sedikit agar tidak terpotong saat muncul hasil */
+            height: 800px;
             border: none;
             border-radius: 8px;
         }
 
-        /* Responsif untuk layar HP: Sidebar turun ke bawah */
+        /* Responsif untuk HP: Sidebar pindah ke atas */
         @media (max-width: 768px) {
-            .main-content, .sidebar {
-                flex: 100%;
-            }
+            .container { flex-direction: column; }
+            .sidebar, .main-content { flex: 100%; }
+            .sidebar { padding: 15px 0; }
+            .menu-item { border-left: none; border-bottom: 2px solid transparent; }
+            .menu-item.active { border-left: none; border-bottom: 2px solid #3498db; }
         }
     </style>
 </head>
@@ -70,32 +119,81 @@
 
     <header>
         <h1>Ruang Belajar Interaktif</h1>
-        <p>Tempat membaca artikel dan menguji wawasanmu</p>
+        <p>Eksplorasi Pengetahuan Tanpa Batas</p>
     </header>
 
     <div class="container">
-        <!-- Area Artikel / Konten Utama -->
-        <main class="main-content">
-            <h2>Pentingnya Wawasan Pengetahuan Umum</h2>
-            <p>Selamat datang! Memiliki pengetahuan umum yang luas tidak hanya membantu kita dalam kehidupan sehari-hari, tetapi juga memperluas cara pandang kita terhadap dunia.</p>
-            <p>Sambil bersantai dan membaca konten di halaman ini, silakan uji seberapa jauh wawasan kamu dengan mengerjakan kuis interaktif yang ada di sebelah kanan layar (atau di bagian bawah jika kamu membukanya dari *smartphone*).</p>
-            <p>Kuis tersebut dirancang untuk menguji ingatanmu tentang geografi, sains, hingga sejarah. Jangan ragu untuk mencobanya, karena sistem akan langsung memberikan koreksi mana jawabanmu yang benar dan mana yang salah.</p>
-            <p>Selamat mencoba dan semoga mendapatkan skor yang sempurna!</p>
-        </main>
-
-        <!-- Area Sidebar untuk Kuis -->
         <aside class="sidebar">
-            <h3 style="text-align: center; color: #2c3e50; margin-top: 0;">Uji Pengetahuanmu!</h3>
+            <h3>Menu Navigasi</h3>
             
-            <!-- Link Google Apps Script kamu dipasang di sini -->
-            <iframe 
-                class="kuis-iframe" 
-                src="https://script.google.com/macros/s/AKfycbzZd587N-pufLkII1hMSTRrxItggMEGYtwahZ2LTRizH2JHFD-c5EAJ-4T_StQCZhjR_A/exec" 
-                title="Kuis Interaktif">
-            </iframe>
-
+            <div class="menu-item active" onclick="bukaHalaman('beranda', this)">🏠 Beranda</div>
+            <div class="menu-item" onclick="bukaHalaman('artikel', this)">📖 Artikel & Materi</div>
+            <div class="menu-item" onclick="bukaHalaman('kuis', this)">📝 Kuis Interaktif</div>
+            <div class="menu-item" onclick="bukaHalaman('tentang', this)">ℹ️ Tentang Kami</div>
         </aside>
+
+        <main class="main-content">
+            
+            <div id="beranda" class="content-section active-content">
+                <h2>Selamat Datang di Ruang Belajar!</h2>
+                <p>Silakan gunakan menu di sebelah kiri untuk menavigasi website ini.</p>
+                <p>Website ini dirancang sebagai simulasi portal edukasi modern. Tanpa perlu memuat ulang (reload) halaman, kamu bisa berpindah-pindah dari membaca artikel hingga mengerjakan kuis secara instan.</p>
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ilustrasi Belajar" style="width:100%; border-radius:8px; margin-top:20px;">
+            </div>
+
+            <div id="artikel" class="content-section">
+                <h2>Artikel & Materi</h2>
+                <p>Di sini kamu bisa menambahkan berbagai paragraf untuk materi belajar pengunjungmu.</p>
+                <ul>
+                    <li><strong>Materi 1:</strong> Sejarah Kemerdekaan Indonesia.</li>
+                    <li><strong>Materi 2:</strong> Pengenalan Tata Surya dan Alam Semesta.</li>
+                    <li><strong>Materi 3:</strong> Tokoh-Tokoh Penemu Dunia.</li>
+                </ul>
+                <p><i>Contoh: Setelah membaca materi-materi di atas, pengunjung bisa menguji pemahaman mereka dengan mengklik menu "Kuis Interaktif" di sidebar kiri.</i></p>
+            </div>
+
+            <div id="kuis" class="content-section">
+                <h2>Uji Pengetahuanmu!</h2>
+                <p>Jawablah pertanyaan di bawah ini dengan teliti. Skor dan koreksi akan langsung muncul setelah kamu selesai.</p>
+                
+                <iframe 
+                    class="kuis-iframe" 
+                    src="https://script.google.com/macros/s/AKfycbzZd587N-pufLkII1hMSTRrxItggMEGYtwahZ2LTRizH2JHFD-c5EAJ-4T_StQCZhjR_A/exec" 
+                    title="Kuis Interaktif">
+                </iframe>
+            </div>
+
+            <div id="tentang" class="content-section">
+                <h2>Tentang Website Ini</h2>
+                <p>Website ini dikembangkan menggunakan perpaduan HTML, CSS, JavaScript, dan backend sederhana dari Google Apps Script.</p>
+                <p><strong>Dihosting oleh:</strong> GitHub Pages (100% Gratis)</p>
+                <p>Teruslah belajar dan berkarya!</p>
+            </div>
+
+        </main>
     </div>
+
+    <script>
+        function bukaHalaman(idHalaman, elemenMenu) {
+            // 1. Sembunyikan semua section (konten di kanan)
+            let semuaKonten = document.querySelectorAll('.content-section');
+            semuaKonten.forEach(function(konten) {
+                konten.classList.remove('active-content');
+            });
+
+            // 2. Hilangkan warna aktif dari semua menu di sidebar
+            let semuaMenu = document.querySelectorAll('.menu-item');
+            semuaMenu.forEach(function(menu) {
+                menu.classList.remove('active');
+            });
+
+            // 3. Tampilkan section yang diklik
+            document.getElementById(idHalaman).classList.add('active-content');
+
+            // 4. Beri warna pada menu yang sedang diklik
+            elemenMenu.classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
